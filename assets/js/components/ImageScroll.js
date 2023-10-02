@@ -36,7 +36,7 @@ export default class Stairs extends Group {
 				random: {value: Math.random() * Math.PI},
 				id: { value : i},
 				uCount: { value: this.imgCount },
-				resolution: { value: new Vector2(store.window.w, store.window.h, )},
+				resolution: { value: new Vector2(store.window.w, store.window.h)},
 				uWindowRatio: { value: windowRatio}
 				// uScaleToViewSize : { value: new Vector2( this.viewSize.width / widthViewUnit - 1,  viewSize.height / heightViewUnit - 1)}
 			}

@@ -31,6 +31,6 @@ void main() {
 	float alpha = step(uv.x, 1.) * step(0., uv.x) * step(0., uv.y) * step(uv.y, 1.);
 	gl_FragColor = vec4(map);
 	// gl_FragColor.rgb = vec3(alpha, 0., 0.);
-	gl_FragColor.a = alpha * vOpacity + 0.5;
+	gl_FragColor.a = alpha * vOpacity;
 	// gl_FragColor = vec4(1., 0., 0., 1.);
 }

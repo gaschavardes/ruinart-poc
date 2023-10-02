@@ -84,7 +84,7 @@ void main()	{
 	float scaleVal = clamp( mod((uScroll - id ), uCount), 0., 1.) * maxScale + mod(uScroll - id, uCount) * 0.2;
 	
 	// float zVal = clamp(mod(uScroll - id, -400.), 0., 1.) * 2.;
-	newPos *= scaleMatrix(scaleVal  * 0.5);
+	newPos *= scaleMatrix(scaleVal * 0.3);
 	newPos.rgb = deformationCurve(newPos.rgb, uv, vec2(0.2 * smoothstep(maxScale - 0.5, maxScale + 2., scaleVal)));
 
 	newPos.z -= mod((uScroll - id), uCount) * 0.001;

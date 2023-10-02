@@ -5,11 +5,12 @@ uniform sampler2D tMap;
 uniform float uMatcapExtraBlend;
 varying float vOpacity;
 uniform vec2 resolution;
+uniform float uWindowRatio;
 varying float defY;
 varying float defX;
 
 void main() {
-	float ratio = vRatio.x/vRatio.y;
+	float ratio = (1./ uWindowRatio) * vRatio.x/vRatio.y;
 	vec2 uv = vUv;
 	// uv.y -= defY;
 	// uv.y += sign(uv.y) * sin(uv.y);

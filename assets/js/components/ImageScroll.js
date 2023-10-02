@@ -37,15 +37,15 @@ export default class Stairs extends Group {
 				id: { value : i},
 				uCount: { value: this.imgCount },
 				resolution: { value: new Vector2(store.window.w, store.window.h, )},
+				uWindowRatio: { value: windowRatio}
 				// uScaleToViewSize : { value: new Vector2( this.viewSize.width / widthViewUnit - 1,  viewSize.height / heightViewUnit - 1)}
 			}
 			
 			const mesh = new Mesh(
-				new PlaneGeometry(2, 2, 32, 32),
+				new PlaneGeometry(2 * windowRatio, 2, 32, 32),
 				new StairsMaterial({
 					uniforms: meshUniforms,
 					index: i
-					
 				}),
 			)
 			const path = i === 0 ? text2 : text1

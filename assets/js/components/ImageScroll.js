@@ -14,7 +14,7 @@ export default class Stairs extends Group {
 		super()
 
 		this.scroll = 1
-		this.imgCount = 50
+		this.imgCount = 6
 		this.meshes = []
 		this.images = [img1, img2, img3, img4, img5, img6]
 

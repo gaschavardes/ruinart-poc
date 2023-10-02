@@ -16,8 +16,6 @@ varying float vOpacity;
 varying float defY;
 varying float defX;
 
-
-
 #include <dynamicBaseVertPars>
 
 varying vec2 vUv;
@@ -66,16 +64,18 @@ mat4 rotationMatrix(vec3 axis, float angle)
    );
    defY = way.y * (sin(uv.x * PI) * offset.y);
    defX = way.x * (sin(uv.y * PI) * offset.x);
-//    position.x = position.x + defX + way.x * -smoothstep(-1., 1., -position.y) * offset.y * 2.;
-   position.x = position.x + defX + max(position.y * -sign(position.x), 0.) *  offset.x;
+   float offsetX = - max(position.y - 1., -10.) * sign(position.x) * 2. * offset.x;
+//    vUv.x += offsetX * 0.2;
+   position.x = position.x + defX + way.x * -smoothstep(-1., 1., -position.y) * offset.y * 2.;
+   position.x = position.x + defX ;
    position.y = position.y + defY;
    return position;
  }
 
 void main()	{
-	vUv = uv;
 	vRatio = ratio;
 	// mat4 newInstance = instanceMatrix;
+	vUv = uv;
 	
 	vec4 newPos = vec4(position, 1.);
 	// newPos *= rotationMatrix(vec3(0., 0., 1.), sin(uTime * 0.001 + random * 30.) * 0.02);
@@ -99,6 +99,7 @@ void main()	{
 	
 	#include <dynamicBaseVert>
     
+
 	gl_Position = projectionMatrix * modelViewMatrix * newPos;
 	// gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.);
 

@@ -1,4 +1,4 @@
-import { ShaderMaterial, Vector2, DoubleSide, FrontSide } from 'three'
+import { ShaderMaterial, Vector2, DoubleSide } from 'three'
 import { mergeDeep } from '../../utils'
 
 import vertexShader from './vert.glsl'
@@ -18,7 +18,8 @@ export default class StairsMaterial extends ShaderMaterial {
 					id: { value: 0},
 					resolution: { value: new Vector2},
 					uCount: { value: 0},
-					uWindowRatio: { value: 0}
+					uWindowRatio: { value: 0},
+					uIndex : { value: options.index % 2}
 				},
 
 				defines: {
@@ -37,9 +38,10 @@ export default class StairsMaterial extends ShaderMaterial {
 			uniforms: options.uniforms,
 			fog: false,
 			transparent: true,
-			side: FrontSide,
+			side: DoubleSide,
+			alphaTest: 1,
 		})
-		console.log()
+		console.log(options.index)
 		this.globalUniforms = options.globalUniforms
 		this.uniforms = Object.assign(this.uniforms, this.globalUniforms)
 	}

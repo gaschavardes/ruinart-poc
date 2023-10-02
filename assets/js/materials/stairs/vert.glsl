@@ -67,7 +67,7 @@ mat4 rotationMatrix(vec3 axis, float angle)
    defY = way.y * (sin(uv.x * PI) * offset.y);
    defX = way.x * (sin(uv.y * PI) * offset.x);
 //    position.x = position.x + defX + way.x * -smoothstep(-1., 1., -position.y) * offset.y * 2.;
-   position.x = position.x + defX;
+   position.x = position.x + defX + max(position.y * -sign(position.x), 0.) *  offset.x;
    position.y = position.y + defY;
    return position;
  }

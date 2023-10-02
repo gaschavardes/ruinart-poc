@@ -60,7 +60,7 @@ export default class MainScene extends Scene {
 		this.load()
 
 		E.on('App:start', () => {
-			this.createFbo()
+			// this.createFbo()
 			this.build()
 			this.addEvents()
 		})
@@ -145,7 +145,7 @@ export default class MainScene extends Scene {
 	onResize = () => {
 		this.camera.aspect = store.window.w / store.window.h
 		this.camera.updateProjectionMatrix()
-		store.envFbo.setSize(store.window.w * store.WebGL.renderer.getPixelRatio(), store.window.h * store.WebGL.renderer.getPixelRatio())
+		// store.envFbo.setSize(store.window.w * store.WebGL.renderer.getPixelRatio(), store.window.h * store.WebGL.renderer.getPixelRatio())
 		this.composer.setSize(store.window.w, store.window.h)
 	}
 

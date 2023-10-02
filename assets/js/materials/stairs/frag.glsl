@@ -8,6 +8,7 @@ uniform vec2 resolution;
 uniform float uWindowRatio;
 varying float defY;
 varying float defX;
+uniform float uIndex;
 
 void main() {
 
@@ -32,5 +33,5 @@ void main() {
 	gl_FragColor = vec4(map);
 	// gl_FragColor.rgb = vec3(alpha, 0., 0.);
 	gl_FragColor.a = alpha * vOpacity;
-	// gl_FragColor = vec4(1., 0., 0., 1.);
+	// gl_FragColor = vec4(1., uIndex, 0., vOpacity);
 }

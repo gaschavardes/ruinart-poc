@@ -1,16 +1,22 @@
 import { Group, MathUtils, InstancedMesh, Object3D, InstancedBufferAttribute, RepeatWrapping, PlaneGeometry, TextureLoader, Mesh, Vector2 } from 'three'
 import text1 from '~/static/image/text1.jpeg'
 import text2 from '~/static/image/text2.jpeg'
+import img1 from '~/static/image/img1.jpg'
+import img2 from '~/static/image/img2.jpg'
+import img3 from '~/static/image/img3.jpg'
+import img4 from '~/static/image/img4.jpg'
+import img5 from '~/static/image/img5.jpg'
+import img6 from '~/static/image/img6.jpg'
 import store from '../store'
 import { StairsMaterial } from '../materials'
 export default class Stairs extends Group {
 	constructor() {
 		super()
 
-		this._instanceDummy = new Object3D()
 		this.scroll = 1
 		this.imgCount = 50
 		this.meshes = []
+		this.images = [img1, img2, img3, img4, img5, img6]
 
 		window.addEventListener("mousewheel", (e) => {
 			this.scroll += e.deltaY * 0.01
@@ -21,9 +27,6 @@ export default class Stairs extends Group {
 
 	build() {
 		store.RAFCollection.add(this.animate, 0)
-		const objectUniforms = {
-			tMap: { value: new TextureLoader().load(text1) },
-		}
 	
 		const ratio = []
 		const id = []
@@ -32,7 +35,6 @@ export default class Stairs extends Group {
 		for (let i = 0; i < this.imgCount ; i++) {
 
 			const meshUniforms = {
-				tMap: { value: new TextureLoader().load(text1) },
 				random: {value: Math.random() * Math.PI},
 				id: { value : i},
 				uCount: { value: this.imgCount },
@@ -48,7 +50,7 @@ export default class Stairs extends Group {
 					index: i
 				}),
 			)
-			const path = i === 0 ? text2 : text1
+			const path = this.images[i % 6]
 			const texture = new TextureLoader()
 			texture.load(
 				path,
@@ -57,9 +59,9 @@ export default class Stairs extends Group {
 					mesh.material.uniforms.ratio.value = new Vector2(tex.image.width, tex.image.height)
 				}
 			)
-
 			this.meshes.push(mesh)
 			this.add(mesh)
+			console.log()
 		}
 	}
 

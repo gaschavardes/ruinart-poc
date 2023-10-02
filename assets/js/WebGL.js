@@ -22,7 +22,9 @@ export default class WebGL {
 		this.renderer = new WebGLRenderer({ alpha: true, antialias: true, canvas: this.dom.canvas, powerPreference: 'high-performance', stencil: false })
 		this.renderer.setPixelRatio(store.window.dpr >= 2 ? 2 : store.window.dpr)
 		this.renderer.setSize(store.window.w, store.window.h)
+	
 
+		this.renderer.toneMappingExposure = 1
 		this.clock = new Clock()
 
 		this.globalUniforms = {

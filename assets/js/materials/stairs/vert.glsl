@@ -87,7 +87,7 @@ void main()	{
 	// newPos *= scaleMatrix(0.83);
 	// newPos *= scaleMatrix(0.5);
 	newPos *= scaleMatrix(scaleVal * 0.4);
-	newPos.rgb = deformationCurve(newPos.rgb, uv, vec2(0.2 * smoothstep(maxScale - 0.5, maxScale + 2., scaleVal)));
+	newPos.rgb = deformationCurve(newPos.rgb, uv, vec2(0.1 * smoothstep(maxScale - 0.5, maxScale + 2., scaleVal)));
 
 	newPos.z -= mod((uScroll - id), uCount) * 0.001;
 

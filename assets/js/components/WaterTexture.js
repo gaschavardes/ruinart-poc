@@ -107,7 +107,7 @@ export default class WaterTexture {
 			x: point.x * this.width,
 			y: point.y * this.height
 		}
-		const radius = this.radius
+		const radius = this.radius * point.force * 2.
 		const ctx = this.ctx
 
 		let intensity = 1
@@ -122,7 +122,6 @@ export default class WaterTexture {
 			)
 		}
 		intensity *= point.force
-
 		const red = ((point.vx + 1) / 2) * 255
 		const green = ((point.vy + 1) / 2) * 255
 		// B = Unit vector
@@ -133,7 +132,7 @@ export default class WaterTexture {
 		// 1. Give the shadow a high offset.
 		ctx.shadowOffsetX = offset
 		ctx.shadowOffsetY = offset
-		ctx.shadowBlur = radius * 1
+		ctx.shadowBlur = radius * intensity
 		ctx.shadowColor = `rgba(${color},${0.2 * intensity})`
 
 		this.ctx.beginPath()

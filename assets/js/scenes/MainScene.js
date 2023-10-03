@@ -2,6 +2,7 @@
 import { Color, PerspectiveCamera, CameraHelper, OrthographicCamera, Scene, AmbientLight, SpotLight, GridHelper, Vector2, ShaderMaterial, WebGLRenderTarget} from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import ImageScroll from '../components/ImageScroll'
+import WaterTexture from '../components/WaterTexture'
 import store from '../store'
 import { E } from '../utils'
 import GlobalEvents from '../utils/GlobalEvents'
@@ -12,6 +13,7 @@ import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
 import screenFxVert from '../../../glsl/includes/screenFx/vert.glsl'
 import screenFxFrag from '../../../glsl/includes/screenFx/frag.glsl'
+
 
 export default class MainScene extends Scene {
 	constructor() {
@@ -74,6 +76,7 @@ export default class MainScene extends Scene {
 			this.components[key].build(this.objectData)
 			this.add(this.components[key])
 		}
+		this.waterTexture = new WaterTexture({ debug: true })
 
 		// this.buildPasses()
 	}
@@ -138,6 +141,7 @@ export default class MainScene extends Scene {
 		}
 
 		store.Gui && store.Gui.refresh(false)
+		this.waterTexture.update()
 
 		this.composer.render()
 	}

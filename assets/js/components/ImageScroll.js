@@ -14,6 +14,9 @@ export default class Stairs extends Group {
 		super()
 
 		this.scroll = 1
+		this.easedMouse = new Vector2()
+		this.easedMouseTemp = new Vector2()
+		this.mouseVelocity = new Vector2()
 		this.imgCount = 6
 		this.meshes = []
 		this.images = [img1, img2, img3, img4, img5, img6]
@@ -44,12 +47,13 @@ export default class Stairs extends Group {
 			}
 			
 			const mesh = new Mesh(
-				new PlaneGeometry(2 * windowRatio, 2, 32, 32),
+				new PlaneGeometry(1 * windowRatio, 1, 32, 32),
 				new StairsMaterial({
 					uniforms: meshUniforms,
 					index: i
 				}),
 			)
+			mesh.scale.set(2, 2, 2)
 			const path = this.images[i % 6]
 			const texture = new TextureLoader()
 			texture.load(
@@ -61,7 +65,6 @@ export default class Stairs extends Group {
 			)
 			this.meshes.push(mesh)
 			this.add(mesh)
-			console.log()
 		}
 	}
 
@@ -83,8 +86,14 @@ export default class Stairs extends Group {
 		// }
 	}
 	animate = () => {
+		this.easedMouseTemp.subVectors(store.pointer.glNormalized, this.easedMouse)
+		this.easedMouseTemp.multiplyScalar(0.2)
+		this.easedMouse.addVectors(this.easedMouseTemp, this.easedMouse)
+		this.mouseVelocity.subVectors(store.pointer.glNormalized, this.easedMouse) 
+
 		this.meshes.forEach(el => {
 			el.material.uniforms.uScroll.value = this.scroll
+			el.material.uniforms.uMouse.value = this.mouseVelocity
 		})
 		// this.instance.material.uniforms.uScroll.value = this.scroll
 	}

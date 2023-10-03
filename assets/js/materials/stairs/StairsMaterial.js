@@ -19,7 +19,8 @@ export default class StairsMaterial extends ShaderMaterial {
 					resolution: { value: new Vector2},
 					uCount: { value: 0},
 					uWindowRatio: { value: 0},
-					uIndex : { value: options.index % 2}
+					uIndex : { value: options.index % 2},
+					uMouse: { value: new Vector2()}
 				},
 
 				defines: {

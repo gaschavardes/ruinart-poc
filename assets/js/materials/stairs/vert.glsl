@@ -11,6 +11,7 @@ uniform float uTransitionProgress;
 uniform vec2 ratio;
 uniform float id;
 uniform float uCount;
+uniform vec2 uMouse;
 varying vec2 vRatio;
 varying float vOpacity;
 varying float defY;
@@ -62,8 +63,8 @@ mat4 rotationMatrix(vec3 axis, float angle)
 	1. - smoothstep(0., 1., uv.x) * 2.,
 	1. - smoothstep(0., 1., uv.y) * 2.
    );
-   defY = way.y * (sin(uv.x * PI) * offset.y);
-   defX = way.x * (sin(uv.y * PI) * offset.x);
+   defY = way.y * (sin(uv.x * PI) * (offset.y + uMouse.y * -sign(position.y) * 0.1));
+   defX = way.x * (sin(uv.y * PI) * (offset.x + uMouse.x * -sign(position.x) * 0.1));
    float offsetX = - max(position.y - 1., -10.) * sign(position.x) * 2. * offset.x;
 //    vUv.x += offsetX * 0.2;
    position.x = position.x + defX + way.x * -smoothstep(-1., 1., -position.y) * offset.y * 2.;

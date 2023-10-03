@@ -1,6 +1,7 @@
 #ifndef HALF_PI
 #define HALF_PI 1.5707963267948966
 #define PI 3.14159265359
+#pragma glslify: ease = require(glsl-easings/cubic-out)
 #endif
 precision highp float;
 precision highp int;
@@ -65,8 +66,8 @@ mat4 rotationMatrix(vec3 axis, float angle)
    );
    float smoothY = smoothstep(-1., -0., position.y) * smoothstep(1., 0., position.y) * uMouse.y * 0.05; 
    float smoothX = smoothstep(-1., -0., position.x) * smoothstep(1., 0., position.x) * uMouse.x * 0.05; 
-   defY = way.y * (sin(uv.x * PI) * (offset.y + uMouse.y * -sign(position.y) * 0.1)) + smoothY;
-   defX = way.x * (sin(uv.y * PI) * (offset.x + uMouse.x * -sign(position.x) * 0.1)) + smoothX;
+   defY = way.y * (sin(uv.x * PI) * (offset.y + uMouse.y * -sign(position.y) * 0.05)) + smoothY;
+   defX = way.x * (sin(uv.y * PI) * (offset.x + uMouse.x * -sign(position.x) * 0.05)) + smoothX;
    float offsetX = - max(position.y - 1., -10.) * sign(position.x) * 2. * offset.x;
 //    vUv.x += offsetX * 0.2;
    position.x = position.x + defX + way.x * -smoothstep(-1., 1., -position.y) * offset.y * 2.;
@@ -84,7 +85,7 @@ void main()	{
 	// newPos *= rotationMatrix(vec3(0., 0., 1.), sin(uTime * 0.001 + random * 30.) * 0.02);
 
 	float maxScale = 1.;
-	float scaleVal = clamp( mod((uScroll - id ), uCount), 0., 1.) * maxScale + mod(uScroll - id, uCount) * 0.2;
+	float scaleVal = ease(clamp( mod((uScroll - id ), uCount), 0., 1.)) * maxScale + mod(uScroll - id, uCount) * 0.2;
 	
 	// float zVal = clamp(mod(uScroll - id, -400.), 0., 1.) * 2.;
 	// newPos *= scaleMatrix(0.83);

@@ -13,6 +13,7 @@ uniform vec2 ratio;
 uniform float id;
 uniform float uCount;
 uniform vec2 uMouse;
+uniform float uProgress;
 varying vec2 vRatio;
 varying float vOpacity;
 varying float defY;
@@ -70,7 +71,7 @@ mat4 rotationMatrix(vec3 axis, float angle)
    defX = way.x * (sin(uv.y * PI) * (offset.x + uMouse.x * -sign(position.x) * 0.05)) + smoothX;
    float offsetX = - max(position.y - 1., -10.) * sign(position.x) * 2. * offset.x;
 //    vUv.x += offsetX * 0.2;
-   position.x = position.x + defX + way.x * -smoothstep(-1., 1., -position.y) * offset.y * 2.;
+   position.x = position.x + defX + mix(way.x * -smoothstep(-1., 1., -position.y) * offset.y * 2., 0., uProgress);
    position.x = position.x + defX ;
    position.y = position.y + defY;
    return position;
@@ -85,17 +86,16 @@ void main()	{
 	// newPos *= rotationMatrix(vec3(0., 0., 1.), sin(uTime * 0.001 + random * 30.) * 0.02);
 
 	float maxScale = 1.;
-	float scaleVal = ease(clamp( mod((uScroll - id ), uCount), 0., 1.)) * maxScale + mod(uScroll - id, uCount) * 0.2;
+	float scaleVal = ease(clamp( mod((uScroll - id - length(position) * 0.01), uCount), 0., 1.)) * maxScale + mod(uScroll - id, uCount) * 0.2;
 	
 	// float zVal = clamp(mod(uScroll - id, -400.), 0., 1.) * 2.;
-	// newPos *= scaleMatrix(0.83);
 	// newPos *= scaleMatrix(0.5);
-	newPos *= scaleMatrix(scaleVal * 0.4);
+	newPos *= scaleMatrix(mix(scaleVal * 0.4, 0.83, uProgress));
 	newPos.rgb = deformationCurve(newPos.rgb, uv, vec2(0.1 * smoothstep(maxScale - 0.5, maxScale + 2., scaleVal)));
 
 	newPos.z -= mod((uScroll - id), uCount) * 0.001;
 
-	vOpacity = smoothstep( maxScale - 0.6, maxScale, clamp( mod((uScroll - id), uCount), 0., 1.) * maxScale) * (smoothstep(maxScale + 1., maxScale + 0.9, scaleVal));
+	vOpacity = mix(smoothstep( maxScale - 0.6, maxScale, clamp( mod((uScroll - id), uCount), 0., 1.) * maxScale) * (smoothstep(maxScale + 1., maxScale + 0.9, scaleVal)), 1., uProgress);
 	// vOpacity = 1.;
 	// newInstance[3][1] -= exponentialIn(distance(instanceMatrix[3].xz, cameraPosition.xz) * .25 - sineOut(clamp(uTransitionProgress, 0., 1.)) * 0.5 + .5) + sin(uTime * 0.001 + random) * (random + 1.) * 0.002;
 
